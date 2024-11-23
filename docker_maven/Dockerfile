@@ -1,3 +1,4 @@
-FROM maven:3.8.8-jdk-11
+FROM maven:latest
 WORKDIR /app
 COPY . /app
+RUN mvn clean install
