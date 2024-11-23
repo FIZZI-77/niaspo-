@@ -1,5 +1,14 @@
-FROM maven:latest
-WORKDIR /app
-COPY . /app
-RUN mvn clean package
+# Используем официальный образ Maven как базовый
+FROM maven:3.8.6-openjdk-17-slim
 
+# Устанавливаем рабочую директорию
+WORKDIR /app
+
+# Копируем файлы проекта в контейнер
+COPY . /app
+
+# Собираем проект
+RUN mvn clean install
+
+# Указываем команду для запуска
+CMD ["mvn", "spring-boot:run"]
