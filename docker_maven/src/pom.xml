@@ -1,50 +1,69 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.example</groupId>
-    <artifactId>docker-maven</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <!-- Основные настройки проекта -->
+    <groupId>com.example</groupId> <!-- Измените на свой groupId -->
+    <artifactId>my-docker-project</artifactId> <!-- Задайте имя артефакта -->
+    <version>1.0.0</version>
+    <packaging>jar</packaging> <!-- Укажите тип упаковки, например, jar -->
 
+    <!-- Зависимости -->
     <dependencies>
-        <!-- Пример зависимости для тестирования -->
+        <!-- Пример зависимости для Maven, можно добавить нужные для проекта -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.1</version>
-            <scope>test</scope>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>2.7.3</version>
         </dependency>
+        <!-- Добавьте другие зависимости, если нужно -->
     </dependencies>
 
+    <!-- Настройки сборки -->
     <build>
         <plugins>
-            <!-- Плагин для компиляции Java -->
+            <!-- Плагин для сборки Docker с Maven -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.1.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Плагин для компиляции и тестирования -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>11</source> <!-- Версия Java, которую вы используете -->
-                    <target>11</target> <!-- Версия Java, которую вы используете -->
+                    <source>11</source>
+                    <target>11</target>
                 </configuration>
-            </plugin>
-
-            <!-- Плагин для сборки JAR -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase> <!-- Указывает фазу для упаковки в JAR -->
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
+
+    <!-- Дополнительная информация о проекте -->
+    <name>My Docker Project</name>
+    <description>Описание проекта</description>
+    <url>https://example.com</url> <!-- Замените на свой URL -->
+
+    <!-- Дополнительные настройки для CI/CD и прочее -->
+    <ciManagement>
+        <system>GitHub Actions</system>
+        <url>https://github.com/yourname/yourrepo/actions</url>
+    </ciManagement>
+
+    <scm>
+        <connection>scm:git:git://github.com/yourname/yourrepo.git</connection>
+        <developerConnection>scm:git:ssh://github.com/yourname/yourrepo.git</developerConnection>
+        <url>https://github.com/yourname/yourrepo</url>
+    </scm>
+
 </project>
