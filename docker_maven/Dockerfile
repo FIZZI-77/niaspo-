@@ -1,4 +1,4 @@
-FROM maven:3.9.5-eclipse-temurin-17
+FROM maven:latest
 
 RUN apt-get update && apt-get install -y nodejs npm && rm -rf /var/lib/apt/lists/*
 WORKDIR /usr/src/app
