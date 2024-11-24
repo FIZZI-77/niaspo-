@@ -1,15 +1,16 @@
-# Используем официальный образ Maven
-FROM maven:3.9.5-eclipse-temurin-17
+# Используем официальный образ Maven с OpenJDK 17
+FROM maven:latest AS build
 
-# Устанавливаем рабочую директорию внутри контейнера
+# Копируем pom.xml и все исходники
+COPY pom.xml /app/
+COPY src /app/src/
+
+# Переходим в директорию /app и выполняем сборку проекта
 WORKDIR /app
-
-# Копируем `pom.xml` и исходный код в контейнер
-COPY pom.xml /app
-COPY src /app/src
-
-# Выполняем сборку Maven
 RUN mvn clean install
 
-# Указываем команду по умолчанию (если требуется)
-CMD ["mvn", "spring-boot:run"]
+# Извлекаем JAR файл и копируем его в новый контейнер
+FROM openjdk:17-jdk-slim
+COPY --from=build /app/target/docker_maven-1.0-SNAPSHOT.jar /app/docker_maven.jar
+
+ENTRYPOINT ["java", "-jar", "/app/docker_maven.jar"]
