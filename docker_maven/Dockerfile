@@ -1,26 +1,11 @@
-# Используем официальный образ Maven
-FROM maven:latest AS build
+FROM maven:3.9.5-eclipse-temurin-17
 
-# Устанавливаем рабочую директорию
-WORKDIR /app
-
-# Копируем файл pom.xml и скачиваем зависимости
-COPY docker_maven/pom.xml .
-
-# Копируем весь исходный код проекта
-COPY docker_maven/src/ /app/src/
-
-# Собираем проект с помощью Maven
-RUN mvn clean install
-
-# Устанавливаем образ для запуска (например, JAR-файл)
-FROM openjdk:11-jre-slim
-
-# Копируем собранный JAR-файл из стадии сборки
-COPY --from=build /app/target/docker_maven-1.0-SNAPSHOT.jar /app/docker_maven.jar
-
-# Открываем порт
+RUN apt-get update && apt-get install -y nodejs npm && rm -rf /var/lib/apt/lists/*
+WORKDIR /usr/src/app
+COPY settings.xml /root/.m2/settings.xml
+COPY server.js /usr/src/app/
+COPY entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/entrypoint.sh
 EXPOSE 8080
 
-# Запускаем приложение
-CMD ["java", "-jar", "/app/docker_maven.jar"]
+ENTRYPOINT ["entrypoint.sh"]
