@@ -1,12 +1,26 @@
-FROM maven:latest
+# Используем официальный образ Maven
+FROM maven:3.8.6-openjdk-11-slim AS build
 
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && apt-get install -y nodejs
+# Устанавливаем рабочую директорию
+WORKDIR /app
 
-WORKDIR /usr/src/app
-COPY docker_maven/settings.xml /root/.m2/settings.xml
-COPY docker_maven/server.js /usr/src/app/
-COPY docker_maven/entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/entrypoint.sh
+# Копируем файл pom.xml и скачиваем зависимости
+COPY docker_maven/pom.xml .
+
+# Копируем весь исходный код проекта
+COPY docker_maven/src/ /app/src/
+
+# Собираем проект с помощью Maven
+RUN mvn clean install
+
+# Устанавливаем образ для запуска (например, JAR-файл)
+FROM openjdk:11-jre-slim
+
+# Копируем собранный JAR-файл из стадии сборки
+COPY --from=build /app/target/docker_maven-1.0-SNAPSHOT.jar /app/docker_maven.jar
+
+# Открываем порт
 EXPOSE 8080
 
-ENTRYPOINT ["entrypoint.sh"]
+# Запускаем приложение
+CMD ["java", "-jar", "/app/docker_maven.jar"]
