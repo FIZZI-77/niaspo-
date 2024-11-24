@@ -7,7 +7,7 @@
       "start": "node server.js"
     },
     "keywords": ["http", "server", "nodejs"],
-    "author": "Ilya Slesar",
+    "author": "Zaprudnov Fedor",
     "license": "MIT"
   }
   

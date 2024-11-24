@@ -5,7 +5,7 @@ const path = require('path');
 const PORT = 80;
 
 const server = http.createServer((req, res) => {
-    const filePath = path.join(__dirname, req.url);
+    const filePath = path.join(__dirname, 'public', req.url); // используем папку 'public'
 
     fs.readFile(filePath, (err, data) => {
         if (err) {
