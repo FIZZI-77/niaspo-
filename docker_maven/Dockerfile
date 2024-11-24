@@ -1,16 +1,15 @@
-# Используем официальный образ Maven с OpenJDK 17
+# Используем официальный образ Maven с OpenJDK
 FROM maven:latest AS build
 
-# Копируем pom.xml и все исходники
-COPY pom.xml /app/
-COPY ../src /app/src/
-
-# Переходим в директорию /app и выполняем сборку проекта
+# Устанавливаем рабочую директорию в контейнере
 WORKDIR /app
+
+# Копируем POM и исходники в контейнер
+COPY pom.xml .
+COPY src ./src
+
+# Выполняем сборку Maven для проверки зависимостей и компиляции
 RUN mvn clean install
 
-# Извлекаем JAR файл и копируем его в новый контейнер
-FROM openjdk:17-jdk-slim
-COPY --from=build /app/target/docker_maven-1.0-SNAPSHOT.jar /app/docker_maven.jar
-
-ENTRYPOINT ["java", "-jar", "/app/docker_maven.jar"]
+# Команда по умолчанию для запуска приложения
+CMD ["mvn", "spring-boot:run"]

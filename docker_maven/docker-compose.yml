@@ -1,6 +1,13 @@
 version: '3.8'
 services:
   maven:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
       - ./src:/app/src
+      - ./pom.xml:/app/pom.xml
+    working_dir: /app
+    command: mvn spring-boot:run
+    ports:
+      - "8080:8080"
