@@ -15,4 +15,19 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+    <build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.8.1</version> <!-- Или более новая версия плагина -->
+            <configuration>
+                <source>1.8</source>  <!-- Установите подходящую версию, например, 1.8 для Java 8 -->
+                <target>1.8</target>  <!-- Установите подходящую версию, например, 1.8 для Java 8 -->
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+
 </project>
+
