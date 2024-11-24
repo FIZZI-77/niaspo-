@@ -1,6 +1,15 @@
 #!/bin/bash
 
-node docker_maven/src/server.js &
+# Запускаем сервер Node.js в фоновом режиме
+node src/app/server.js &
+
+
+
+# Сообщаем о запуске сервера
 echo "HTTP server started on port 8080"
 
-tail -f /dev/null
+# Ожидаем завершения серверного процесса (не обязательно)
+wait $(jobs -p)
+
+# Или используем tail для "зависания" контейнера
+# tail -f /dev/null
