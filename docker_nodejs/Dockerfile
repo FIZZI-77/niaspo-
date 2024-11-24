@@ -1,6 +1,6 @@
 FROM node:14-alpine
 WORKDIR /app
-COPY package*.json ./
+COPY docker_nodejs/package.json ./
 RUN npm install
 COPY docker_nodejs/src /app
 EXPOSE 80
