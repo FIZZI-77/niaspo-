@@ -1,5 +1,5 @@
 # Используем образ Maven для сборки
-FROM maven:3.8.4-openjdk-11 AS build
+FROM maven:latest AS build
 WORKDIR /app
 COPY . .
 RUN mvn clean package
