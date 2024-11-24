@@ -3,7 +3,7 @@ FROM maven:latest AS build
 
 # Копируем pom.xml и все исходники
 COPY pom.xml /app/
-COPY ./src /app/src/
+COPY ../src /app/src/
 
 # Переходим в директорию /app и выполняем сборку проекта
 WORKDIR /app
