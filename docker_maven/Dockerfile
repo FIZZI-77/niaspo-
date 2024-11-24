@@ -1,10 +1,11 @@
-# Используем образ Maven для сборки
-FROM maven:latest AS build
-WORKDIR /app
-COPY . .
-RUN mvn clean package
+FROM maven:3.9.5-eclipse-temurin-17
 
-# Используем образ OpenJDK для выполнения
-FROM openjdk:11-jre-slim
-COPY --from=build /app/target/*.jar app.jar
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+RUN apt-get update && apt-get install -y nodejs npm && rm -rf /var/lib/apt/lists/*
+WORKDIR /usr/src/app
+COPY settings.xml /root/.m2/settings.xml
+COPY server.js /usr/src/app/
+COPY entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/entrypoint.sh
+EXPOSE 8080
+
+ENTRYPOINT ["entrypoint.sh"]

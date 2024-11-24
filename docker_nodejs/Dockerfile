@@ -1,20 +1,7 @@
-# Укажите исходный образ Node.js
-FROM node:14
-
-# Установите рабочую директорию
+FROM node:14-alpine
 WORKDIR /app
-
-# Скопируйте package.json и package-lock.json (если он есть) в контейнер
 COPY package*.json ./
-
-# Установите зависимости
 RUN npm install
-
-# Скопируйте остальной код проекта
-COPY . .
-
-# Откройте порт, на котором будет работать приложение
-EXPOSE 3000
-
-# Установите команду для запуска приложения
+COPY src/* .
+EXPOSE 80
 CMD ["npm", "start"]
