@@ -7,8 +7,6 @@ RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
 
 COPY docker_maven/settings.xml /root/.m2/settings.xml
 COPY docker_maven/server.js /usr/src/app/
-COPY . /app
-
 COPY docker_maven/entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh
 EXPOSE 8080
