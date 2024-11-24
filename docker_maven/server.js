@@ -33,6 +33,10 @@ const server = http.createServer((req, res) => {
   }
 });
 
+server.get('/', (req, res) => {
+  res.send('<h1>Сайт запущен</h1><p>Ваше приложение успешно работает на платформе Render.</p>');
+});
+
 server.listen(8080, () => {
   console.log('Server running on port 8080');
 });
