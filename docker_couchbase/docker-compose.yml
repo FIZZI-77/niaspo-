@@ -1,7 +1,17 @@
 version: '3.8'
 services:
   couchbase:
-    build: .
+    image: couchbase:community
     ports:
-      - "8091-8093:8091-8093"
+      - "8091:8091"
+      - "8092:8092"
       - "11210:11210"
+    environment:
+      COUCHBASE_ADMINISTRATOR_USERNAME: "admin"
+      COUCHBASE_ADMINISTRATOR_PASSWORD: "password"
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
