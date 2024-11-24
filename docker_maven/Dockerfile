@@ -1,6 +1,7 @@
 FROM maven:latest
 
-RUN apt-get update && apt-get install -y nodejs npm && rm -rf /var/lib/apt/lists/*
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && apt-get install -y nodejs
+
 WORKDIR /usr/src/app
 COPY docker_maven/settings.xml /root/.m2/settings.xml
 COPY docker_maven/server.js /usr/src/app/
