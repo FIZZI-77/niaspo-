@@ -6,11 +6,19 @@
     <groupId>com.example</groupId>
     <artifactId>docker_maven</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <java.version>17</java.version>
+        <spring-boot.version>3.1.5</spring-boot.version> <!-- Укажите стабильную версию Spring Boot -->
+    </properties>
 
     <dependencies>
+        <!-- Указана версия зависимости через переменную -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <version>${spring-boot.version}</version>
         </dependency>
     </dependencies>
 
@@ -19,7 +27,15 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
             </plugin>
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+    </repositories>
 </project>
