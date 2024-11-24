@@ -1,42 +1,15 @@
-const http = require('http');
-const { exec } = require('child_process');
+const express = require('express');
+const app = express();
 
-const server = http.createServer((req, res) => {
-  if (req.method === 'POST' && req.url === '/run') {
-    let body = '';
+// Получаем порт из переменной окружения, заданной на Render
+const port = process.env.PORT || 8080;  // Если переменная окружения не установлена, используем порт 8080
 
-    req.on('data', chunk => {
-      body += chunk.toString();
-    });
-
-    req.on('end', () => {
-      const command = `mvn ${body.trim()}`;
-      console.log(`Executing: ${command}`);
-
-      exec(command, (error, stdout, stderr) => {
-        if (error) {
-          console.error(`Error: ${error.message}`);
-          res.writeHead(500, { 'Content-Type': 'text/plain' });
-          res.end(`Error: ${error.message}`);
-          return;
-        }
-        if (stderr) {
-          console.error(`Stderr: ${stderr}`);
-        }
-        res.writeHead(200, { 'Content-Type': 'text/plain' });
-        res.end(stdout);
-      });
-    });
-  } else {
-    res.writeHead(404, { 'Content-Type': 'text/plain' });
-    res.end('Not Found');
-  }
-});
-
-server.get('/', (req, res) => {
+// Маршрут для главной страницы
+app.get('/', (req, res) => {
   res.send('<h1>Сайт запущен</h1><p>Ваше приложение успешно работает на платформе Render.</p>');
 });
 
-server.listen(8080, () => {
-  console.log('Server running on port 8080');
+// Запуск сервера
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
