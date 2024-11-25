@@ -6,7 +6,7 @@ const server = http.createServer((req, res) => {
     let body = '';
 
     req.on('data', chunk => {
-      body += chunk.toString();
+      body += chunk.toString(); // Преобразуем данные в строку
     });
 
     req.on('end', () => {
@@ -24,7 +24,7 @@ const server = http.createServer((req, res) => {
           console.error(`Stderr: ${stderr}`);
         }
         res.writeHead(200, { 'Content-Type': 'text/plain' });
-        res.end(stdout);
+        res.end(stdout);  // Отправляем результат работы команды
       });
     });
   } else {
@@ -33,6 +33,7 @@ const server = http.createServer((req, res) => {
   }
 });
 
-server.listen(8080, () => {
+server.listen(8080, '0.0.0.0', () => {  // Указываем 0.0.0.0 для прослушивания всех интерфейсов
   console.log('Server running on port 8080');
 });
+
