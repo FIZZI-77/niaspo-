@@ -23,19 +23,4 @@
 
 ---
 
-## Инструкция по выполнению
 
-### 1. Создание файлов контейнера
-- В каждом проекте создайте `Dockerfile` и при необходимости `docker-compose.yml`.
-- Настройте контейнеры для соответствующих сервисов.
-
-Пример `Dockerfile` для Node.js:
-```dockerfile
-FROM node:14
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-CMD ["npm", "start"]
-EXPOSE 3000
-```
